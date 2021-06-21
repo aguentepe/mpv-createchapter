@@ -66,8 +66,8 @@ local function write_chapter()
             content_insert_chapters = content_insert_chapters..content_first_chapter
         end
 
-        local next_chapter="      <ChapterAtom>\n        <ChapterDisplay>\n          <ChapterString>"..current_chapter.title.."</ChapterString>\n          <ChapterLanguage>eng</ChapterLanguage>\n        </ChapterDisplay>\n        <ChapterUID>"..math.random(1000, 9000).."</ChapterUID>\n        <ChapterTimeStart>"..time_pos.."</ChapterTimeStart>\n        <ChapterFlagHidden>0</ChapterFlagHidden>\n        <ChapterFlagEnabled>1</ChapterFlagEnabled>\n      </ChapterAtom>\n"
-        content_insert_chapters = content_insert_chapters..next_chapter
+        local content_next_chapter="      <ChapterAtom>\n        <ChapterDisplay>\n          <ChapterString>"..current_chapter.title.."</ChapterString>\n          <ChapterLanguage>eng</ChapterLanguage>\n        </ChapterDisplay>\n        <ChapterUID>"..math.random(1000, 9000).."</ChapterUID>\n        <ChapterTimeStart>"..time_pos.."</ChapterTimeStart>\n        <ChapterFlagHidden>0</ChapterFlagHidden>\n        <ChapterFlagEnabled>1</ChapterFlagEnabled>\n      </ChapterAtom>\n"
+        content_insert_chapters = content_insert_chapters..content_next_chapter
     end
 
     local file_content="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<Chapters>\n  <EditionEntry>\n    <EditionFlagHidden>0</EditionFlagHidden>\n    <EditionFlagDefault>0</EditionFlagDefault>\n    <EditionUID>"..euid.."</EditionUID>\n"..content_insert_chapters.."  </EditionEntry>\n</Chapters>"
