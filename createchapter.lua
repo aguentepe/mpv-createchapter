@@ -51,35 +51,36 @@ local function format_time(seconds)
 end
 
 local function write_chapter()
-    local euid = mp.get_property_number("estimated-frame-count")
     local chapter_count = mp.get_property_number("chapter-list/count")
     local all_chapters = mp.get_property_native("chapter-list")
     local content_insert_chapters = ""
     local current_chapter = nil
+    local previous_chapter = all_chapters[1]
 
     for i = 1, chapter_count, 1 do
         current_chapter = all_chapters[i]
-        local time_pos = format_time(current_chapter.time)
 
-        if i == 1 and current_chapter.time ~= 0 then
-            local content_first_chapter="    <ChapterAtom>\n      <ChapterUID>"..math.random(1000, 9000).."</ChapterUID>\n      <ChapterFlagHidden>0</ChapterFlagHidden>\n      <ChapterFlagEnabled>1</ChapterFlagEnabled>\n      <ChapterDisplay>\n        <ChapterString>Prologue</ChapterString>\n        <ChapterLanguage>eng</ChapterLanguage>\n      </ChapterDisplay>\n      <ChapterTimeStart>00:00:00.000</ChapterTimeStart>\n    </ChapterAtom>\n"
-            content_insert_chapters = content_insert_chapters..content_first_chapter
+        if i ~= 1 then
+            local content_next_chapter="[CHAPTER]\nTIMEBASE=1/1000\nSTART="..string.format("%.f", previous_chapter.time*1000).."\nEND="..string.format("%.f", current_chapter.time*1000).."\ntitle="..current_chapter.title.."\n"
+            content_insert_chapters = content_insert_chapters..content_next_chapter
         end
-
-        local content_next_chapter="      <ChapterAtom>\n        <ChapterDisplay>\n          <ChapterString>"..current_chapter.title.."</ChapterString>\n          <ChapterLanguage>eng</ChapterLanguage>\n        </ChapterDisplay>\n        <ChapterUID>"..math.random(1000, 9000).."</ChapterUID>\n        <ChapterTimeStart>"..time_pos.."</ChapterTimeStart>\n        <ChapterFlagHidden>0</ChapterFlagHidden>\n        <ChapterFlagEnabled>1</ChapterFlagEnabled>\n      </ChapterAtom>\n"
-        content_insert_chapters = content_insert_chapters..content_next_chapter
+        if i == chapter_count then
+            local content_last_chapter="[CHAPTER]\nTIMEBASE=1/1000\nSTART="..string.format("%.f", current_chapter.time*1000).."\nEND="..string.format("%.f", mp.get_property_number("duration")*1000).."\ntitle="..current_chapter.title.."\n"
+            content_insert_chapters = content_insert_chapters..content_last_chapter
+        end
+        previous_chapter = current_chapter
     end
 
-    local file_content="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<Chapters>\n  <EditionEntry>\n    <EditionFlagHidden>0</EditionFlagHidden>\n    <EditionFlagDefault>0</EditionFlagDefault>\n    <EditionUID>"..euid.."</EditionUID>\n"..content_insert_chapters.."  </EditionEntry>\n</Chapters>"
+    local file_content=";FFMETADATA1\n"..content_insert_chapters
 
     local path = mp.get_property("path")
     dir, name_ext = utils.split_path(path)
     local name = string.sub(name_ext, 1, (string.len(name_ext)-4))
-    local out_path = utils.join_path(dir, name.."_chapter.xml")
+    local out_path = utils.join_path(dir, name.."_chapter.ffmd")
     local file = io.open(out_path, "w")
     if file == nil then
         dir = utils.getcwd()
-        out_path = utils.join_path(dir, "create_chapter.xml")
+        out_path = utils.join_path(dir, "create_chapter.ffmd")
         file = io.open(out_path, "w")
     end
     if file == nil then
