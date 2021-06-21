@@ -39,7 +39,7 @@ end
 local function write_chapter()
     local chapter_count = mp.get_property_number("chapter-list/count")
     local all_chapters = mp.get_property_native("chapter-list")
-    local content_insert_chapters = ""
+    local file_content = ";FFMETADATA1\n"
     local current_chapter = nil
     local previous_chapter = all_chapters[1]
 
@@ -48,16 +48,14 @@ local function write_chapter()
 
         if i ~= 1 then
             local content_next_chapter="[CHAPTER]\nTIMEBASE=1/1000\nSTART="..string.format("%.f", previous_chapter.time*1000).."\nEND="..string.format("%.f", current_chapter.time*1000).."\ntitle="..current_chapter.title.."\n"
-            content_insert_chapters = content_insert_chapters..content_next_chapter
+            file_content = file_content..content_next_chapter
         end
         if i == chapter_count then
             local content_last_chapter="[CHAPTER]\nTIMEBASE=1/1000\nSTART="..string.format("%.f", current_chapter.time*1000).."\nEND="..string.format("%.f", mp.get_property_number("duration")*1000).."\ntitle="..current_chapter.title.."\n"
-            content_insert_chapters = content_insert_chapters..content_last_chapter
+            file_content = file_content..content_last_chapter
         end
         previous_chapter = current_chapter
     end
-
-    local file_content=";FFMETADATA1\n"..content_insert_chapters
 
     local path = mp.get_property("path")
     dir, name_ext = utils.split_path(path)
