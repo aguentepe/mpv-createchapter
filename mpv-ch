@@ -1,0 +1,5 @@
+#!/bin/sh
+
+FILE="$1"
+shift
+/usr/bin/mpv --chapters-file="${FILE%.*}_chapter.ffmd" "$FILE" $@

@@ -9,3 +9,9 @@ Place the `createchapter.lua` file into mpv scripts folder.
 `Shift-c` - Mark chapters
 
 `Shift-x` - Export ffmetadata file
+
+### mpv-ch
+Open videos with `mpv-ch` to load the chapter file automatically.
+#### To install:
+Move the `mpv-ch` script to `/usr/local/bin` or your preferred binary installation directory.
+And move `mpv-ch.desktop` to `$HOME/.local/share/applications/`.
