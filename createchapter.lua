@@ -54,7 +54,7 @@ local function write_chapter()
     local euid = mp.get_property_number("estimated-frame-count")
     local chapter_count = mp.get_property_number("chapter-list/count")
     local all_chapters = mp.get_property_native("chapter-list")
-    local insert_chapters = ""
+    local content_insert_chapters = ""
     local current_chapter = nil
 
     for i = 1, chapter_count, 1 do
@@ -63,14 +63,14 @@ local function write_chapter()
 
         if i == 1 and current_chapter.time ~= 0 then
             local first_chapter="    <ChapterAtom>\n      <ChapterUID>"..math.random(1000, 9000).."</ChapterUID>\n      <ChapterFlagHidden>0</ChapterFlagHidden>\n      <ChapterFlagEnabled>1</ChapterFlagEnabled>\n      <ChapterDisplay>\n        <ChapterString>Prologue</ChapterString>\n        <ChapterLanguage>eng</ChapterLanguage>\n      </ChapterDisplay>\n      <ChapterTimeStart>00:00:00.000</ChapterTimeStart>\n    </ChapterAtom>\n"
-            insert_chapters = insert_chapters..first_chapter
+            content_insert_chapters = content_insert_chapters..first_chapter
         end
 
         local next_chapter="      <ChapterAtom>\n        <ChapterDisplay>\n          <ChapterString>"..current_chapter.title.."</ChapterString>\n          <ChapterLanguage>eng</ChapterLanguage>\n        </ChapterDisplay>\n        <ChapterUID>"..math.random(1000, 9000).."</ChapterUID>\n        <ChapterTimeStart>"..time_pos.."</ChapterTimeStart>\n        <ChapterFlagHidden>0</ChapterFlagHidden>\n        <ChapterFlagEnabled>1</ChapterFlagEnabled>\n      </ChapterAtom>\n"
-        insert_chapters = insert_chapters..next_chapter
+        content_insert_chapters = content_insert_chapters..next_chapter
     end
 
-    local file_content="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<Chapters>\n  <EditionEntry>\n    <EditionFlagHidden>0</EditionFlagHidden>\n    <EditionFlagDefault>0</EditionFlagDefault>\n    <EditionUID>"..euid.."</EditionUID>\n"..insert_chapters.."  </EditionEntry>\n</Chapters>"
+    local file_content="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<Chapters>\n  <EditionEntry>\n    <EditionFlagHidden>0</EditionFlagHidden>\n    <EditionFlagDefault>0</EditionFlagDefault>\n    <EditionUID>"..euid.."</EditionUID>\n"..content_insert_chapters.."  </EditionEntry>\n</Chapters>"
 
     local path = mp.get_property("path")
     dir, name_ext = utils.split_path(path)
