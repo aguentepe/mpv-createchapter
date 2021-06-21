@@ -70,7 +70,7 @@ local function write_chapter()
         insert_chapters = insert_chapters..next_chapter
     end
 
-    local chapters="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<Chapters>\n  <EditionEntry>\n    <EditionFlagHidden>0</EditionFlagHidden>\n    <EditionFlagDefault>0</EditionFlagDefault>\n    <EditionUID>"..euid.."</EditionUID>\n"..insert_chapters.."  </EditionEntry>\n</Chapters>"
+    local file_content="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<Chapters>\n  <EditionEntry>\n    <EditionFlagHidden>0</EditionFlagHidden>\n    <EditionFlagDefault>0</EditionFlagDefault>\n    <EditionUID>"..euid.."</EditionUID>\n"..insert_chapters.."  </EditionEntry>\n</Chapters>"
 
     local path = mp.get_property("path")
     dir, name_ext = utils.split_path(path)
@@ -86,7 +86,7 @@ local function write_chapter()
         mp.error("Could not open chapter file for writing.")
         return
     end
-    file:write(chapters)
+    file:write(file_content)
     file:close()
     mp.osd_message("Export file to: "..out_path, 3)
 end
