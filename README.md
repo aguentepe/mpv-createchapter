@@ -8,6 +8,6 @@ Place the [`createchapter.lua`][link] file into mpv scripts folder.
 ## Keybind
 `Shift-c` - Mark chapters
 
-`Shift-b` - Export ffmetadata file
+`Shift-x` - Export ffmetadata file
 
 [link]: https://github.com/shinchiro/mpv-createchapter/raw/master/createchapter.lua

@@ -77,4 +77,4 @@ local function write_chapter()
 end
 
 mp.add_key_binding("C", "create_chapter", create_chapter, {repeatable=true})
-mp.add_key_binding("B", "write_chapter", write_chapter, {repeatable=false})
+mp.add_key_binding("X", "write_chapter", write_chapter, {repeatable=false})
