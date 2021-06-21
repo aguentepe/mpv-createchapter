@@ -36,20 +36,6 @@ local function create_chapter()
     mp.set_property_number("chapter", curr_chapter+1)
 end
 
-local function format_time(seconds)
-    local result = ""
-    if seconds <= 0 then
-        return "00:00:00.000";
-    else
-        hours = string.format("%02.f", math.floor(seconds/3600))
-        mins = string.format("%02.f", math.floor(seconds/60 - (hours*60)))
-        secs = string.format("%02.f", math.floor(seconds - hours*60*60 - mins*60))
-        msecs = string.format("%03.f", seconds*1000 - hours*60*60*1000 - mins*60*1000 - secs*1000)
-        result = hours..":"..mins..":"..secs.."."..msecs
-    end
-    return result
-end
-
 local function write_chapter()
     local chapter_count = mp.get_property_number("chapter-list/count")
     local all_chapters = mp.get_property_native("chapter-list")
