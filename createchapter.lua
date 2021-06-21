@@ -62,8 +62,8 @@ local function write_chapter()
         local time_pos = format_time(current_chapter.time)
 
         if i == 1 and current_chapter.time ~= 0 then
-            local first_chapter="    <ChapterAtom>\n      <ChapterUID>"..math.random(1000, 9000).."</ChapterUID>\n      <ChapterFlagHidden>0</ChapterFlagHidden>\n      <ChapterFlagEnabled>1</ChapterFlagEnabled>\n      <ChapterDisplay>\n        <ChapterString>Prologue</ChapterString>\n        <ChapterLanguage>eng</ChapterLanguage>\n      </ChapterDisplay>\n      <ChapterTimeStart>00:00:00.000</ChapterTimeStart>\n    </ChapterAtom>\n"
-            content_insert_chapters = content_insert_chapters..first_chapter
+            local content_first_chapter="    <ChapterAtom>\n      <ChapterUID>"..math.random(1000, 9000).."</ChapterUID>\n      <ChapterFlagHidden>0</ChapterFlagHidden>\n      <ChapterFlagEnabled>1</ChapterFlagEnabled>\n      <ChapterDisplay>\n        <ChapterString>Prologue</ChapterString>\n        <ChapterLanguage>eng</ChapterLanguage>\n      </ChapterDisplay>\n      <ChapterTimeStart>00:00:00.000</ChapterTimeStart>\n    </ChapterAtom>\n"
+            content_insert_chapters = content_insert_chapters..content_first_chapter
         end
 
         local next_chapter="      <ChapterAtom>\n        <ChapterDisplay>\n          <ChapterString>"..current_chapter.title.."</ChapterString>\n          <ChapterLanguage>eng</ChapterLanguage>\n        </ChapterDisplay>\n        <ChapterUID>"..math.random(1000, 9000).."</ChapterUID>\n        <ChapterTimeStart>"..time_pos.."</ChapterTimeStart>\n        <ChapterFlagHidden>0</ChapterFlagHidden>\n        <ChapterFlagEnabled>1</ChapterFlagEnabled>\n      </ChapterAtom>\n"
